@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -16,6 +17,11 @@ class UserService
     return User::find($id);
   }
 
+  public function getUserByIdWithPosts(int $id)
+  {
+    return User::with('posts')->find($id);
+  }
+
   public function getUserByEmail(string $email)
   {
     return User::where('email', $email)->first();
@@ -23,6 +29,7 @@ class UserService
 
   public function createUser(array $data)
   {
+    $data['password'] = Hash::make($data['password']);
     return User::create($data);
   }
 

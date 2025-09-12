@@ -2,13 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\Comment;
+
 class CommentService
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+  public function createComment(array $data)
+  {
+    return Comment::create($data);
+  }
+
+  public function deleteComment(Comment $comment)
+  {
+    return $comment->delete();
+  }
 }

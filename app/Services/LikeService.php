@@ -2,13 +2,22 @@
 
 namespace App\Services;
 
+use App\Models\Like;
+
 class LikeService
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+  public function createLike(array $data)
+  {
+    return Like::create($data);
+  }
+
+  public function deleteLike(Like $like)
+  {
+    return $like->delete();
+  }
+
+  public function getLikeCountByPostId(int $postId)
+  {
+    $count = Like::query()->where('post_id', '=', $postId)->count();
+  }
 }
