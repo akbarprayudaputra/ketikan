@@ -4,15 +4,9 @@ namespace App\Services;
 
 use App\Models\Comment;
 
-class CommentService
+interface CommentService
 {
-  public function createComment(array $data)
-  {
-    return Comment::create($data);
-  }
-
-  public function deleteComment(Comment $comment)
-  {
-    return $comment->delete();
-  }
+  public function createComment(array $data);
+  public function deleteComment(Comment $comment);
+  public function getCommentsByPostId(int $postId);
 }
