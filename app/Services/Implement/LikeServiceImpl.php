@@ -7,18 +7,20 @@ use App\Services\LikeService;
 
 class LikeServiceImpl implements LikeService
 {
-  public function createLike(array $data)
+  public function createLike(array $data): Like
   {
-    return Like::create($data);
+      return Like::create($data);
   }
 
-  public function deleteLike(Like $like)
+  public function deleteLike(Like $like): bool
   {
-    return $like->delete();
+      return $like->delete();
   }
 
-  public function getLikeCountByPostId(int $postId)
+  public function getLikeCountByPostId(int $postId): int
   {
-    $count = Like::query()->where('post_id', '=', $postId)->count();
+      return Like::query()->where('post_id', $postId)->count();
   }
+
+
 }

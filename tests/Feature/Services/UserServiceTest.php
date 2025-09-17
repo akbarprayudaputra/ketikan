@@ -11,7 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class UserServiceFeatureTest extends TestCase
+class UserServiceTest extends TestCase
 {
   use RefreshDatabase;
 
