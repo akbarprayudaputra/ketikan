@@ -24,26 +24,35 @@ class LikeServiceTest extends TestCase
 
     public function test_create_like()
     {
-       $user = User::factory()->create();
+        $user = User::factory()->create();
         $post = Post::factory()->create([
             'user_id' => $user->id,
         ]);
 
         $like = $this->likeService->createLike([
             'post_id' => $post->id,
-            'user_id' => $user->id, // bisa sesuaikan dengan field user di model kamu
+            'user_id' => $user->id,
         ]);
 
         $this->assertDatabaseHas('likes', [
             'id' => $like->id,
             'post_id' => $post->id,
-            'user_id' => 1,
+            'user_id' => $user->id,
         ]);
     }
 
+
     public function test_delete_like()
     {
-        $like = Like::factory()->create();
+        $user = User::factory()->create();
+        $post = Post::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $like = Like::factory()->create([
+            'user_id' => $user->id,
+            'post_id' => $post->id,
+        ]);
 
         $result = $this->likeService->deleteLike($like);
 
@@ -53,11 +62,17 @@ class LikeServiceTest extends TestCase
         ]);
     }
 
+
     public function test_get_like_count_by_post_id()
     {
-        $post = Post::factory()->create();
+        $user = User::factory()->create();
+        $post = Post::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
         Like::factory()->count(3)->create([
             'post_id' => $post->id,
+            'user_id' => $user->id,
         ]);
 
         $count = $this->likeService->getLikeCountByPostId($post->id);
