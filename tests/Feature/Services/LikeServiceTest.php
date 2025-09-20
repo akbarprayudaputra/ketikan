@@ -65,15 +65,17 @@ class LikeServiceTest extends TestCase
 
     public function test_get_like_count_by_post_id()
     {
-        $user = User::factory()->create();
-        $post = Post::factory()->create([
-            'user_id' => $user->id,
-        ]);
+        $post = Post::factory()->create();
 
-        Like::factory()->count(3)->create([
-            'post_id' => $post->id,
-            'user_id' => $user->id,
-        ]);
+        // Buat 3 user berbeda
+        $users = User::factory()->count(3)->create();
+
+        foreach ($users as $user) {
+            Like::factory()->create([
+                'post_id' => $post->id,
+                'user_id' => $user->id,
+            ]);
+        }
 
         $count = $this->likeService->getLikeCountByPostId($post->id);
 
